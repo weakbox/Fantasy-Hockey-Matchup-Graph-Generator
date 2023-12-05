@@ -131,7 +131,6 @@ def generate_matchup_plots(away_team_id, home_team_id, week):
     print(f"Plotting {away_team['name']} vs. {home_team['name']} using week {week}'s data set...")
     plot_matchup_bar(home_team, away_team, week)
     plot_matchup_scatter(home_team, away_team, week)
-    plt.show()
 
 def team_modifier():
     while True:
@@ -232,7 +231,6 @@ def plot_presidents_trophy_race(week):
     plt.title(f"The Race for the President's Trophy (Week {week})")
     plt.legend()
     plt.grid(True)
-    plt.show()
 
 # ------------------------------------------------------------
 #                           MAIN
@@ -242,27 +240,35 @@ print('FHMGG: Fantasy Hockey Matchup Graph Generator')
 print('Weakbox Industries 2023')
 print(f'Looking for team data in: {os.getcwd()}')
 
-print('Choose an action:')
-print('\t1: Modify Team Data')
-print('\t2: Generate Matchup Plots')
-print('\t3: Generate Leaguewide Plots')
-print('\t0: Exit the Program')
+while True:
+    print('Choose an action:')
+    print('\t1: Modify Team Data')
+    print('\t2: Generate Matchup Plots')
+    print('\t3: Generate Leaguewide Plots')
+    print('\t4: Show Plots')
+    print('\t0: Exit the Program')
 
-action = int(input('Your input -> '))
+    action = int(input('Your input -> '))
 
-match action:
-    case 1:
-        print('Chose action: Modify Team Data')
-        team_modifier()
-    case 2:
-        print('Chose action: Generate Matchup Plots')
-        away_team = input('Enter the away team abbreviation for this matchup -> ').lower()
-        home_team = input('Enter the home team abbreviation for this matchup -> ').lower()
-        week = int(input('Enter the week you would like to pull data from -> '))
-        generate_matchup_plots(away_team, home_team, week)
-    case 3:
-        print('Chose action: Generate Leaguewide Plots')
-        plot_presidents_trophy_race(8)
-    case _:
-        print('Chose action: Exit the Program')
-action = 0
+    match action:
+        case 1:
+            print('Chose action: Modify Team Data')
+            team_modifier()
+        case 2:
+            print('Chose action: Generate Matchup Plots')
+            away_team = input('Enter the away team abbreviation for this matchup -> ').lower()
+            home_team = input('Enter the home team abbreviation for this matchup -> ').lower()
+            week = int(input('Enter the week you would like to pull data from -> '))
+            generate_matchup_plots(away_team, home_team, week)
+        case 3:
+            print('Chose action: Generate Leaguewide Plots')
+            week = int(input('Enter the week you would like to plot until -> '))
+            plot_presidents_trophy_race(week)
+        case 4:
+            print('Chose action: Show Plots')
+            print('Please close all plots to continue using FHMGG...')
+            plt.show()
+        case _:
+            print('Chose action: Exit the Program')
+            break
+    action = 0
