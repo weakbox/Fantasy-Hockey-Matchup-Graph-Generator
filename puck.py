@@ -5,7 +5,7 @@ import glob as gb
 import matplotlib.pyplot as plt
 import numpy as np
 
-FILE_PATH = 'C:\\Users\\conno\\Desktop\\Matchup Graphs\\'   # Location to save generated graphs.
+FILE_PATH = 'D:\\Documents\\GitHub\\Fantasy-Hockey-Matchup-Graph-Generator\\presentations\\'   # Location to save generated graphs.
 BAR_GRAPH_WIDTH = 0.30                                      # Constant for bar graph width.
 
 def input_list():
@@ -64,30 +64,6 @@ def team_add_data():
     team_dict[f'{week}'] = data
     json_save(team_dict, f"{team_dict['abbreviation']}.json")
     print(f"Added new data to {team_dict['name']} for week {week}!")
-
-def team_process_data(team):
-    """
-    Takes a team dictionary and plots the data for a specified week.
-
-    Parameters:
-    team (dict): A dictionary containing team details and data for different weeks.
-
-    Returns:
-    None
-    """
-    week = input('Enter week you would like to plot: ')
-
-    if f'{week}' in team:
-        data = team[f'{week}']
-        # Use list comprehension to convert the data into floats from strings.
-        data_floats = [float(x) for x in data]
-        plt.plot(data_floats)
-        plt.title('Processed Data')
-        plt.xlabel('Day')
-        plt.ylabel('Points')
-        plt.show()
-    else:
-        print(f'ERROR: Data for week {week} does not exist.')
 
 def json_open(path):
     """
@@ -177,6 +153,8 @@ def plot_matchup_bar(away_team, home_team, week):
     plt.legend()
     plt.grid(True)
 
+    plt.savefig(f"{FILE_PATH}{away_team['abbreviation']}@{home_team['abbreviation']}_bar")
+
 # Scatter plot: shows the accumulation of team points throughout the week.
 def plot_matchup_scatter(away_team, home_team, week):
     plt.figure(2)  # Use the 'figure' parameter for specifying the figure number.
@@ -199,11 +177,16 @@ def plot_matchup_scatter(away_team, home_team, week):
     plt.plot(x, np.cumsum(away_data_copy), label=away_team['name'], linewidth = 3, color=away_team['color'])
     plt.plot(x, np.cumsum(home_data_copy), label=home_team['name'], linewidth = 3, color=home_team['color'])
 
+    print(f"{away_team['name']} Points: {np.cumsum(away_data_copy)}")
+    print(f"{home_team['name']} Points: {np.cumsum(home_data_copy)}")
+
     plt.xlabel('Day')
     plt.ylabel('Points')
     plt.title(f"{away_team['name']} vs. {home_team['name']} Points Trend")
     plt.legend()
     plt.grid(True)
+
+    plt.savefig(f"{FILE_PATH}{away_team['abbreviation']}@{home_team['abbreviation']}_scatter")
 
 # League-wide scatter plot: Shows the race for the President's Trophy.
 def plot_presidents_trophy_race(week):
