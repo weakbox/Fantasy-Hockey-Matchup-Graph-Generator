@@ -105,8 +105,8 @@ def generate_matchup_plots(away_team_id, home_team_id, week):
     away_team = json_open(f'{away_team_id}.json')
     home_team = json_open(f'{home_team_id}.json')
     print(f"Plotting {away_team['name']} vs. {home_team['name']} using week {week}'s data set...")
-    plot_matchup_bar(home_team, away_team, week)
-    plot_matchup_scatter(home_team, away_team, week)
+    plot_matchup_bar(away_team, home_team, week)
+    plot_matchup_scatter(away_team, home_team, week)
 
 def team_modifier():
     while True:
@@ -148,6 +148,7 @@ def plot_matchup_bar(away_team, home_team, week):
     plt.bar(x + BAR_GRAPH_WIDTH/2, home_team_data_floats, width=BAR_GRAPH_WIDTH, label=home_team['name'], color=home_team['color'])
 
     plt.xlabel('Day')
+    plt.xticks(np.arange(7), np.arange(1, 7+1))
     plt.ylabel('Points')
     plt.title(f"{away_team['name']} vs. {home_team['name']} Points-Per-Day")
     plt.legend()
