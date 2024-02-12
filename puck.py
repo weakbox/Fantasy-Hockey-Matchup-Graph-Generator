@@ -142,13 +142,15 @@ def plot_matchup_bar(away_team, home_team, week):
     home_team_data = home_team[f"{week}"]
     home_team_data_floats = [float(x) for x in home_team_data]
 
+    list_length = len(away_team_data)
+
     x = np.arange(len(home_team_data))
 
     plt.bar(x - BAR_GRAPH_WIDTH/2, away_team_data_floats, width=BAR_GRAPH_WIDTH, label=away_team['name'], color=away_team['color'])
     plt.bar(x + BAR_GRAPH_WIDTH/2, home_team_data_floats, width=BAR_GRAPH_WIDTH, label=home_team['name'], color=home_team['color'])
 
     plt.xlabel('Day')
-    plt.xticks(np.arange(7), np.arange(1, 7+1))
+    plt.xticks(np.arange(list_length), np.arange(1, list_length + 1))
     plt.ylabel('Points')
     plt.title(f"{away_team['name']} vs. {home_team['name']} Points-Per-Day")
     plt.legend()
@@ -166,6 +168,8 @@ def plot_matchup_scatter(away_team, home_team, week):
     home_team_data = home_team[f"{week}"]
     home_team_data_floats = [float(x) for x in home_team_data]
 
+    list_length = len(away_team_data)
+
     x = np.arange(len(home_team_data) + 1)
 
     # Insert a zero into the first index of the data array for a more readable graph.
@@ -182,6 +186,7 @@ def plot_matchup_scatter(away_team, home_team, week):
     print(f"{home_team['name']} Points: {np.cumsum(home_data_copy)}")
 
     plt.xlabel('Day')
+    plt.xticks(np.arange(0, list_length + 1, 1))
     plt.ylabel('Points')
     plt.title(f"{away_team['name']} vs. {home_team['name']} Points Trend")
     plt.legend()
